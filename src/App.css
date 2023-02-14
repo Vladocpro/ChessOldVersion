@@ -1,0 +1,222 @@
+
+*{padding:0;margin:0;border:0;}
+
+
+.app {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #51504D;
+}
+
+.board {
+  width: calc(64px * 8);
+  height: calc(64px * 8);
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.cell {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cell img {
+  width: 52px;
+  height: 52px;
+  position: absolute;
+}
+
+.black {
+  background-color: #769656;
+
+}
+
+.white {
+  background-color: #EEEED2;
+
+}
+
+.attackingCircle {
+
+}
+
+.attackingCircle::after {
+  content: "";
+  position: absolute;
+  border: solid 5px rgb(28, 26, 26);
+  border-radius: 50%;
+  opacity: 0.2;
+  height: 45px;
+  width: 40px;
+}
+
+.selected {
+  background-color: #F6F669;
+}
+
+.available {
+  position: absolute;
+  height: 19px;
+  width: 19px;
+  border-radius: 50%;
+  background-color: rgb(28, 26, 26);
+  opacity: 0.2;
+}
+
+.lost {
+  height: 20px;
+  display: flex;
+
+}
+.kingIsUnderAttack {
+  background-color: #a42a2a;
+}
+.timer {
+  margin: 5px 10px;
+  text-align: center;
+}
+.timerChildren {
+  background-color: #769656;
+  border: black solid 3px;
+  margin: 8px 0px;
+}
+.timerChildren:nth-last-child(1) {
+  background-color: #769656;
+  border: white solid 3px;
+  margin: 8px 0px;
+}
+.restartBtn {
+  text-decoration: none;
+  background-color: black;
+  color: white;
+  border: solid white 1px;
+  cursor: pointer;
+  padding: 6px 4px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+}
+.nameFlex {
+  display: flex ;
+  background-color: #769656;
+  border: solid black 2px;
+  margin: 0px 0px;
+}
+.nameSpan {
+ margin: 0px 6px;
+ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+ font-weight: bold;
+
+}
+.popup {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  background-color: transparent;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  right: 55px;
+  bottom: 1px;
+}
+.popupBox {
+  position: relative;
+  width: 17%;
+  min-height: 220px;
+  background-color: #666463;
+  box-shadow: 3px 3px rgba(102,100,99,35%);
+  border-radius: 1rem;
+  z-index: 101;
+  text-align: center;
+  color: white;
+}
+.popupTitle {
+  margin: 12px 7px 0 7px;
+}
+.popupClose {
+  position: relative;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: black;
+  border: white solid 1px;
+  padding: 5px;
+  margin-top: 40px;
+  color: white;
+  cursor: pointer;
+}
+.historyMainBlock {
+  min-height: 513px;
+  min-width: 300px;
+  margin-left: 15px;
+  background-color: #41403E;
+  border-radius: 7px;
+}
+.turnHistoryLabel {
+  color: white;
+  text-align: center;
+  margin-top: 10px;
+}
+.hrTurnHistory {
+  height : 2px;
+  background-color: white;
+  margin-top: 8px;
+}
+.notationNumber {
+  position: relative;
+  bottom: 20px;
+  right: 25px;
+}
+.notationLetter {
+  position: relative;
+  top: 20px;
+  left: 25px;
+}
+.notationLetterSpecial {
+  position: relative;
+  top: 20px;
+  left: 30px;
+  color: white;
+}
+.notationNumberSpecial {
+  position: relative;
+  bottom: 20px;
+  right: 30px;
+  color: white;
+}
+.notationNumberBlack {
+  color: #7ca95d;
+}
+.notationNumberWhite {
+  color: white;
+}
+.notationLetterWhite {
+  color: white;
+}
+.notationLetterBlack {
+  color: #7ca95d;
+}
+.movesRow {
+  display: flex;
+  justify-content: space-between;
+  color: white;
+  padding: 2px 8px 0 6px;
+  text-align: start ;
+  border-bottom: white 2px dashed;
+  background-color: #769656;
+}
+.historyIcon {
+  width: 16px;
+  height: 16px;
+}
+.movesClosingDiv {
+  padding-top: 20px;
+  border-top: solid 2px white;
+}
+
