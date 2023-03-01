@@ -26,8 +26,8 @@ const NameField: FC<NameFieldProps> = ({color, lostBlackFigures,lostWhiteFigures
         <div style={{ paddingBottom: "8px", paddingTop: "8px"}}>
             <div className="nameFlex">
                 {color === Colors.BLACK
-                    ? <img src={ub} style={{width: "42px", height: "42px"}} alt=""/>
-                    : <img src={uw} style={{width: "42px", height: "42px"}} alt=""/>
+                    ? <img src={ub} style={{width: "50px", height: "51px"}} alt=""/>
+                    : <img src={uw} style={{width: "50px", height: "51px"}} alt=""/>
                 }
                 <div>
                     <span className="nameSpan">{name}</span>

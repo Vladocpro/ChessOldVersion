@@ -12,23 +12,24 @@
 }
 
 .board {
-  width: calc(64px * 8);
-  height: calc(64px * 8);
+  width: calc(72px * 8);
+  height: calc(72px * 8);
   display: flex;
   flex-wrap: wrap;
+  border: 3px solid black;
 }
 
 .cell {
-  width: 64px;
-  height: 64px;
+  width: 72px;
+  height: 72px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .cell img {
-  width: 52px;
-  height: 52px;
+  width: 66px;
+  height: 66px;
   position: absolute;
 }
 
@@ -62,17 +63,21 @@
 
 .available {
   position: absolute;
-  height: 19px;
-  width: 19px;
+  height: 20px;
+  width: 20px;
   border-radius: 50%;
   background-color: rgb(28, 26, 26);
   opacity: 0.2;
 }
 
 .lost {
-  height: 20px;
+  height: 30px;
   display: flex;
 
+}
+.lost img {
+  height: 30px;
+  width: 30px;
 }
 .kingIsUnderAttack {
   background-color: #a42a2a;
@@ -103,16 +108,17 @@
   font-weight: bold;
 }
 .nameFlex {
-  display: flex ;
+  display: flex;
   background-color: #769656;
-  border: solid black 2px;
-  margin: 0px 0px;
+  border: solid black 3px;
+  width: 99%;
 }
+
 .nameSpan {
  margin: 0px 6px;
  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
  font-weight: bold;
-
+ font-size: 16px;
 }
 .popup {
   position: fixed;
@@ -218,5 +224,22 @@
 .movesClosingDiv {
   padding-top: 20px;
   border-top: solid 2px white;
+}
+.movesContainer {
+  /*overflow-y:scroll;*/
+  max-height: 469px;
+}
+::-webkit-scrollbar {
+  width: 20px;
+  background-color: white;
+}
+::-webkit-scrollbar-track {
+  background-color: #41403E;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #d6dee1;
+  border-radius: 20px;
+  border: 6px solid transparent;
+  background-clip: content-box;
 }
 

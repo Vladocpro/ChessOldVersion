@@ -11,7 +11,8 @@ export class Cell {
    board: Board;
    available: boolean;
    id: number;
-   blockingKing : boolean = false;
+   blockingWhiteKing : boolean = false;
+   blockingBlackKing : boolean = false;
    notationCoordinate:string = "";
    kingIsBeingAttacked : boolean = false;
    
@@ -31,10 +32,6 @@ export class Cell {
 
    isEnemy(target: Cell): boolean {
       if(target.figure) return this.figure?.color !== target.figure.color;
-      return false;
-   }
-   isBlockingKing(target : Cell) : boolean {
-      if(target.blockingKing) return true;
       return false;
    }
    public horizontalAndVertical(cellsToMove : Cell[], attackingCellsToMove: Cell[]) {
@@ -185,9 +182,15 @@ export class Cell {
       }
    }
 
-   setBlockingKing(bool : boolean) {
-      if(bool) this.blockingKing = true;
-      else this.blockingKing = false;
+   setBlockingKing(color : Colors, bool : boolean) {
+      if(bool) {
+         if(color === Colors.BLACK) this.blockingBlackKing = true
+         else this.blockingWhiteKing = true
+      }
+      else {
+         if(color === Colors.BLACK) this.blockingBlackKing = false
+         else this.blockingWhiteKing = false
+      }
    }
 
    addLostFigure(figure : Figure) {

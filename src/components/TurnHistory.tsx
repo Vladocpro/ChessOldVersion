@@ -3,8 +3,9 @@ import {Board} from "../models/Board";
 import {Player} from "../models/Player";
 import {Figure} from "../models/figures/Figure";
 import {Cell} from "../models/Cell";
+import {useDispatch, useSelector} from "react-redux";
 import {MoveHist} from "../models/MoveHist";
-
+import "../App.css"
 interface TurnHistoryProps {
     moveHist:MoveHist[];
 }
@@ -16,7 +17,7 @@ const TurnHistory: FC<TurnHistoryProps> = ({moveHist}) => {
         <div className="historyMainBlock">
             <div className="turnHistoryLabel">Chess Moves</div>
             <hr className="hrTurnHistory"/>
-            <div className="movesContainer">
+            <div className="movesContainer" style={{overflowY: moveHist.length > 18 ? "scroll" : "hidden" }}>
                 {moveHist.map(move =>
                 <div key={move.turnCounter} className="movesRow">
                     <span>{move.turnCounter}</span>

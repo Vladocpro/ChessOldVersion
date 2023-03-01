@@ -96,6 +96,7 @@ const Timer: FC<TimerProps> = ({currentPlayer, color,restart, playersNames}) => 
                     currentPlayer={currentPlayer}
                     playersNames={playersNames}
                     handleRestart={handleRestart}
+                    setPopop={setPopup}
                 />
             }
         </div>

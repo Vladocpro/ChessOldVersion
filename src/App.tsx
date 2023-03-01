@@ -13,9 +13,7 @@ function App () {
   const [whitePlayer, setWhitePlayer] = useState(new Player(Colors.WHITE));
   const [blackPlayer, setBlackPlayer] = useState(new Player(Colors.BLACK));
   const [currentPlayer, setCurrentPlayer] = useState<Player | null>(null);
-  const [playersNames, setPlayersNames] = useState<String[]>(["Kto-to","Vlad"]);
-   // const [playersNames, setPlayersNames] = useState<String[]>(["Myself","Vlad"]);
-
+  const [playersNames, setPlayersNames] = useState<String[]>(["Yourself","Vlad"]);
 
   useEffect(()=> {
     restart();
@@ -28,7 +26,19 @@ function App () {
     const newBoard = new Board();
     newBoard.initCells();
     newBoard.addFigures();
+       const cells = newBoard.getCells();
+       // reset blockingCells
+       for (let i = 0; i < 8; i++) {
+          for (let j = 0; j < 8; j++) {
+             cells[i][j].setBlockingKing(Colors.BLACK, false);
+             cells[i][j].setBlockingKing(Colors.WHITE, false);
+             if(cells[i][j].figure) { // @ts-ignore
+                cells[i][j].figure.cellsToMove = [];
+             }
+          }
+       }
     setBoard(newBoard);
+       swapPlayer();
   }
 
   function swapPlayer() {
@@ -45,13 +55,14 @@ function App () {
             playersNames={playersNames}
         />
       <BoardComponent
-      board={board} 
+      board={board}
       setBoard={setBoard}
       currentPlayer={currentPlayer}
       swapPlayer={swapPlayer}
       lostBlackFigures={board.lostBlackFigures}
       lostWhiteFigures={board.lostWhiteFigures}
       playersNames={playersNames}
+      handleRestart={restart}
       />
       <TurnHistory
           moveHist={board.moveHist}

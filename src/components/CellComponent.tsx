@@ -1,6 +1,7 @@
 import React, {FC} from 'react'
 import {Cell} from '../models/Cell'
 import {FigureNames} from "../models/figures/Figure";
+import {Colors} from "../models/Colors";
 
 interface CellProps {
   cell: Cell;
@@ -12,7 +13,7 @@ const CellComponent: FC<CellProps> = ({cell, selected, click}) => {
   return (
    <div  className={['cell', cell.color, selected ? "selected" : "",
        cell.available && cell.figure && cell.figure.name !== FigureNames.King ? "attackingCircle" : "",
-       cell.blockingKing && cell.figure?.name === FigureNames.King === true ? "kingIsUnderAttack" :""].join(' ')}
+       ((cell.figure?.color === Colors.WHITE && cell.blockingWhiteKing) || (cell.figure?.color === Colors.BLACK && cell.blockingBlackKing)) && cell.figure?.name === FigureNames.King ? "kingIsUnderAttack" :""].join(' ')}
          onClick={() => click(cell)}
    >
     {cell.available && !cell.figure &&  <div className={"available"}/>}

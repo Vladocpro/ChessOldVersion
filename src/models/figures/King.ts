@@ -15,48 +15,103 @@ export class King extends Figure {
 
     getAvailableCells() {
         let cellsToMove : Cell[] = [];
+        if(this.color === Colors.WHITE){
+            if (this.cell.x + 1 < 8 && this.cell.y + 1 < 8) {
+                let cell = this.cell.board.getCell(this.cell.x + 1, this.cell.y + 1)
+                if ((cell.isEmpty() || this.cell.isEnemy(cell)) && !cell.blockingWhiteKing)
+                    cellsToMove.push(cell);
+            }
+            if (this.cell.x - 1 >= 0 && this.cell.y - 1 >= 0) {
+                let cell = this.cell.board.getCell(this.cell.x - 1, this.cell.y - 1)
+                if ((cell.isEmpty() || this.cell.isEnemy(cell)) && !cell.blockingWhiteKing)
+                    cellsToMove.push(cell);
+            }
+            if(this.cell.x + 1 < 8 && this.cell.y - 1 >= 0) {
+                let cell = this.cell.board.getCell(this.cell.x + 1,this.cell.y - 1);
+                if((cell.isEmpty() || this.cell.isEnemy(cell)) && !cell.blockingWhiteKing) {
+                    cellsToMove.push(cell);
+                }
+            }
+            if(this.cell.x - 1 >= 0 && this.cell.y + 1 < 8) {
+                let cell = this.cell.board.getCell(this.cell.x - 1,this.cell.y + 1)
+                if((cell.isEmpty() || this.cell.isEnemy(cell)) && !cell.blockingWhiteKing) {
+                    cellsToMove.push(cell);
+                }
+            }
+            if(this.cell.x + 1 < 8) {
+                let cell =this.cell.board.getCell(this.cell.x + 1,this.cell.y)
+                if((cell.isEmpty() || this.cell.isEnemy(cell))  && !cell.blockingWhiteKing) {
+                    cellsToMove.push(cell);
+                }
+            }
+            if(this.cell.x - 1 >= 0) {
+                let cell =this.cell.board.getCell(this.cell.x - 1,this.cell.y)
+                if((cell.isEmpty() || this.cell.isEnemy(cell)) && !cell.blockingWhiteKing) {
+                    cellsToMove.push(cell);
+                }
+            }
+            if(this.cell.y + 1 < 8) {
+                let cell = this.cell.board.getCell(this.cell.x,this.cell.y + 1)
+                if((cell.isEmpty() || this.cell.isEnemy(cell))  && !cell.blockingWhiteKing) {
+                    cellsToMove.push(cell);
+                }
+            }
+            if(this.cell.y - 1 >= 0) {
+                let cell =this.cell.board.getCell(this.cell.x,this.cell.y - 1)
+                if((cell.isEmpty() || this.cell.isEnemy(cell))  && !cell.blockingWhiteKing) {
+                    cellsToMove.push(cell);
+                }
+            }
+        }
+        else {
+            if (this.cell.x + 1 < 8 && this.cell.y + 1 < 8) {
+                let cell = this.cell.board.getCell(this.cell.x + 1, this.cell.y + 1)
+                if ((cell.isEmpty() || this.cell.isEnemy(cell)) && !cell.blockingBlackKing)
+                    cellsToMove.push(cell);
+            }
+            if (this.cell.x - 1 >= 0 && this.cell.y - 1 >= 0) {
+                let cell = this.cell.board.getCell(this.cell.x - 1, this.cell.y - 1)
+                if ((cell.isEmpty() || this.cell.isEnemy(cell)) && !cell.blockingBlackKing)
+                    cellsToMove.push(cell);
+            }
+            if(this.cell.x + 1 < 8 && this.cell.y - 1 >= 0) {
+                let cell = this.cell.board.getCell(this.cell.x + 1,this.cell.y - 1);
+                if((cell.isEmpty() || this.cell.isEnemy(cell)) && !cell.blockingBlackKing) {
+                    cellsToMove.push(cell);
+                }
+            }
+            if(this.cell.x - 1 >= 0 && this.cell.y + 1 < 8) {
+                let cell = this.cell.board.getCell(this.cell.x - 1,this.cell.y + 1)
+                if((cell.isEmpty() || this.cell.isEnemy(cell)) && !cell.blockingBlackKing) {
+                    cellsToMove.push(cell);
+                }
+            }
+            if(this.cell.x + 1 < 8) {
+                let cell =this.cell.board.getCell(this.cell.x + 1,this.cell.y)
+                if((cell.isEmpty() || this.cell.isEnemy(cell))  && !cell.blockingBlackKing) {
+                    cellsToMove.push(cell);
+                }
+            }
+            if(this.cell.x - 1 >= 0) {
+                let cell =this.cell.board.getCell(this.cell.x - 1,this.cell.y)
+                if((cell.isEmpty() || this.cell.isEnemy(cell)) && !cell.blockingBlackKing) {
+                    cellsToMove.push(cell);
+                }
+            }
+            if(this.cell.y + 1 < 8) {
+                let cell = this.cell.board.getCell(this.cell.x,this.cell.y + 1)
+                if((cell.isEmpty() || this.cell.isEnemy(cell))  && !cell.blockingBlackKing) {
+                    cellsToMove.push(cell);
+                }
+            }
+            if(this.cell.y - 1 >= 0) {
+                let cell =this.cell.board.getCell(this.cell.x,this.cell.y - 1)
+                if((cell.isEmpty() || this.cell.isEnemy(cell))  && !cell.blockingBlackKing) {
+                    cellsToMove.push(cell);
+                }
+            }
+        }
 
-        if (this.cell.x + 1 < 8 && this.cell.y + 1 < 8) {
-            if (this.cell.board.getCell(this.cell.x + 1, this.cell.y + 1).isEmpty() || this.cell.isEnemy(this.cell.board.getCell(this.cell.x + 1, this.cell.y + 1)))
-                cellsToMove.push(this.cell.board.getCell(this.cell.x + 1, this.cell.y + 1));
-        }
-        if (this.cell.x - 1 >= 0 && this.cell.y - 1 >= 0) {
-            if (this.cell.board.getCell(this.cell.x - 1, this.cell.y - 1).isEmpty() || this.cell.isEnemy(this.cell.board.getCell(this.cell.x - 1, this.cell.y - 1)))
-                cellsToMove.push(this.cell.board.getCell(this.cell.x - 1, this.cell.y - 1));
-        }
-        if(this.cell.x + 1 < 8 && this.cell.y - 1 >= 0) {
-            if(this.cell.board.getCell(this.cell.x + 1,this.cell.y - 1).isEmpty() || this.cell.isEnemy(this.cell.board.getCell(this.cell.x + 1,this.cell.y - 1))) {
-                cellsToMove.push(this.cell.board.getCell(this.cell.x + 1, this.cell.y - 1));
-            }
-        }
-        if(this.cell.x - 1 >= 0 && this.cell.y + 1 < 8) {
-            if(this.cell.board.getCell(this.cell.x - 1,this.cell.y + 1).isEmpty() || this.cell.isEnemy(this.cell.board.getCell(this.cell.x - 1,this.cell.y + 1))) {
-                cellsToMove.push(this.cell.board.getCell(this.cell.x - 1, this.cell.y + 1));
-            }
-        }
-        if(this.cell.x + 1 < 8) {
-            if(this.cell.board.getCell(this.cell.x + 1,this.cell.y).isEmpty() || this.cell.isEnemy(this.cell.board.getCell(this.cell.x + 1,this.cell.y))) {
-                cellsToMove.push(this.cell.board.getCell(this.cell.x + 1, this.cell.y));
-            }
-        }
-        if(this.cell.x - 1 >= 0) {
-            if(this.cell.board.getCell(this.cell.x - 1,this.cell.y).isEmpty() || this.cell.isEnemy(this.cell.board.getCell(this.cell.x - 1,this.cell.y))) {
-                cellsToMove.push(this.cell.board.getCell(this.cell.x - 1, this.cell.y));
-            }
-        }
-        if(this.cell.y + 1 < 8) {
-            if(this.cell.board.getCell(this.cell.x,this.cell.y + 1).isEmpty() || this.cell.isEnemy(this.cell.board.getCell(this.cell.x,this.cell.y + 1))) {
-                cellsToMove.push(this.cell.board.getCell(this.cell.x, this.cell.y + 1));
-            }
-        }
-        if(this.cell.y - 1 >= 0) {
-            if(this.cell.board.getCell(this.cell.x,this.cell.y - 1).isEmpty() || this.cell.isEnemy(this.cell.board.getCell(this.cell.x,this.cell.y - 1))) {
-                cellsToMove.push(this.cell.board.getCell(this.cell.x, this.cell.y - 1));
-            }
-        }
-        for (let i = 0; i < cellsToMove.length; i++) {
-            if(cellsToMove[i].blockingKing) cellsToMove.splice(i,1);
-        }
         this.cellsToMove = cellsToMove;
     }
 
