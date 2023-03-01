@@ -3,7 +3,6 @@ import {Board} from "../models/Board";
 import {Player} from "../models/Player";
 import {Figure} from "../models/figures/Figure";
 import {Cell} from "../models/Cell";
-import {useDispatch, useSelector} from "react-redux";
 import {MoveHist} from "../models/MoveHist";
 import "../App.css"
 interface TurnHistoryProps {
