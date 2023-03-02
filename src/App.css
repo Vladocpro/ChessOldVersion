@@ -252,9 +252,7 @@
   background-color: #769656;
   height: 28px;
 }
-.movesRow:nth-last-child(1) {
-  border-radius: 0 0 0 6px;
-}
+
 .historyContainer {
   display: flex;
   align-items: center;
@@ -273,6 +271,7 @@
 .movesContainer {
   max-height: 469px;
   padding: 0 0 1px 0;
+  border-radius: 0 0 0 6px;
 }
 ::-webkit-scrollbar {
   width: 20px;
