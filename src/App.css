@@ -17,15 +17,26 @@
   display: flex;
   flex-wrap: wrap;
   border: 3px solid black;
-  border-radius: 3px;
+  border-radius: 10px;
 }
-
 .cell {
   width: 72px;
   height: 72px;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.cell:nth-last-child(1) {
+  border-radius: 0 0 9px 0;
+}
+.cell:nth-last-child(8) {
+  border-radius: 0 0 0 9px;
+}
+.cell:nth-last-child(57) {
+  border-radius: 0 9px 0 0;
+}
+.cell:nth-last-child(64) {
+  border-radius: 9px 0 0 0;
 }
 
 .cell img {
