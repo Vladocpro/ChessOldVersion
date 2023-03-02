@@ -7,13 +7,17 @@ interface PopupProps{
     playersNames: String[];
     handleRestart: ()=> void;
     setPopup: (bool : boolean)=>void;
+    subTitle: string;
 }
 
-const Popup: FC<PopupProps> = ({currentPlayer, playersNames, handleRestart, setPopup}) => {
+const Popup: FC<PopupProps> = ({currentPlayer, playersNames, handleRestart, setPopup, subTitle}) => {
     return (
     <div className="popup">
         <div className="popupBox">
-            <h2 className="popupTitle">{currentPlayer?.color === Colors.WHITE ? playersNames[0]: playersNames[1]} Won!</h2>
+            <div className="popupHeader">
+                <h2 className="popupTitle">{currentPlayer?.color === Colors.WHITE ? playersNames[0]: playersNames[1]} Won!</h2>
+                <h2 className="popupSubTitle">{subTitle}</h2>
+            </div>
             <button className="popupClose" onClick={() => {
                 handleRestart();
                 setPopup(false);

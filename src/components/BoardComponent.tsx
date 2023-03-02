@@ -218,7 +218,7 @@ const BoardComponent: FC<BoardProps> = ({board: Board, setBoard, currentPlayer, 
   return (
       <div>
          {
-            winningPopup && <Popup currentPlayer={currentPlayer} playersNames={playersNames} handleRestart={handleRestart} setPopup={setWinningPopup}/>
+            winningPopup && <Popup currentPlayer={currentPlayer} playersNames={playersNames} handleRestart={handleRestart} setPopup={setWinningPopup} subTitle="by Checkmate"/>
          }
           <NameField color={Colors.BLACK} currentPlayer={currentPlayer} name={playersNames[0]} lostWhiteFigures={lostWhiteFigures} lostBlackFigures={lostBlackFigures}/>
           <div className='board' >
