@@ -16,17 +16,17 @@ const TurnHistory: FC<TurnHistoryProps> = ({moveHist}) => {
         <div className="historyMainBlock">
             <div className="turnHistoryLabel">Chess Moves</div>
             <hr className="hrTurnHistory"/>
-            <div className="movesContainer" style={{overflowY: moveHist.length > 18 ? "scroll" : "hidden" }}>
+            <div className="movesContainer" style={{overflowY: moveHist.length > 14 ? "scroll" : "hidden" }}>
                 {moveHist.map(move =>
                 <div key={move.turnCounter} className="movesRow">
-                    <span>{move.turnCounter}</span>
-                    <div>
+                    <span className="historySpan">{move.turnCounter}</span>
+                    <div className="historyContainer">
                         {move.figure1?.logo && <img className="historyIcon" src={move.figure1.logo} alt=""/>}
-                        <span>{move.whiteMove}</span>
+                        <span className="historySpan">{move.whiteMove}</span>
                     </div>
-                    <div>
+                    <div className="historyContainer">
                         {move.figure2?.logo && <img className="historyIcon" src={move.figure2.logo} alt=""/>}
-                        <span>{move.blackMove}</span>
+                        <span className="historySpan">{move.blackMove}</span>
                     </div>
                 </div>
                 )}

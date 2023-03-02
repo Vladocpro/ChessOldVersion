@@ -66,11 +66,11 @@ const Timer: FC<TimerProps> = ({currentPlayer, color,restart, playersNames}) => 
                     {(() => {
                         if (blackTime % 60 < 10) {
                             return (
-                                <h2>{Math.floor(blackTime / 60)}:0{blackTime % 60}</h2>
+                                <h2 className="timerSpan">{Math.floor(blackTime / 60)}:0{blackTime % 60}</h2>
                             )
                         } else if (blackTime % 60 >= 10) {
                             return (
-                                <h2>{Math.floor(blackTime / 60)}:{blackTime % 60}</h2>
+                                <h2 className="timerSpan">{Math.floor(blackTime / 60)}:{blackTime % 60}</h2>
                             )
                         }
                     })()}
@@ -80,11 +80,11 @@ const Timer: FC<TimerProps> = ({currentPlayer, color,restart, playersNames}) => 
                     {(() => {
                         if (whiteTime % 60 < 10) {
                             return (
-                                <h2 style={{color: "#F4F1E9"}}>{Math.floor(whiteTime / 60)}:0{whiteTime % 60}</h2>
+                                <h2  className="timerSpan">{Math.floor(whiteTime / 60)}:0{whiteTime % 60}</h2>
                             )
                         } else if (whiteTime % 60 >= 10) {
                             return (
-                                <h2 style={{color: "#F4F1E9"}}>{Math.floor(whiteTime / 60)}:{whiteTime % 60}</h2>
+                                <h2  className="timerSpan">{Math.floor(whiteTime / 60)}:{whiteTime % 60}</h2>
                             )
                         }
                     })()}
@@ -96,7 +96,7 @@ const Timer: FC<TimerProps> = ({currentPlayer, color,restart, playersNames}) => 
                     currentPlayer={currentPlayer}
                     playersNames={playersNames}
                     handleRestart={handleRestart}
-                    setPopop={setPopup}
+                    setPopup={setPopup}
                 />
             }
         </div>

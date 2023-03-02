@@ -134,12 +134,12 @@ const BoardComponent: FC<BoardProps> = ({board: Board, setBoard, currentPlayer, 
             return obj;
          }
          if(whiteKing.figure?.cellsToMove.length === 0 && whiteKing.blockingWhiteKing) {
-             obj.bool = true;
+             obj.bool = false;
              obj.color = Colors.BLACK;
              // return obj;
          }
          else  if(blackKing.figure?.cellsToMove.length === 0 && blackKing.blockingBlackKing) {
-             obj.bool = true;
+             obj.bool = false;
              obj.color = Colors.WHITE;
              // return obj;
          }
@@ -218,7 +218,7 @@ const BoardComponent: FC<BoardProps> = ({board: Board, setBoard, currentPlayer, 
   return (
       <div>
          {
-            winningPopup && <Popup currentPlayer={currentPlayer} playersNames={playersNames} handleRestart={handleRestart} setPopop={setWinningPopup}/>
+            winningPopup && <Popup currentPlayer={currentPlayer} playersNames={playersNames} handleRestart={handleRestart} setPopup={setWinningPopup}/>
          }
           <NameField color={Colors.BLACK} currentPlayer={currentPlayer} name={playersNames[0]} lostWhiteFigures={lostWhiteFigures} lostBlackFigures={lostBlackFigures}/>
           <div className='board' >

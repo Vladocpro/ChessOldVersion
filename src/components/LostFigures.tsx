@@ -10,7 +10,7 @@ const LostFigures: FC<LostFiguresProps> = ({ figures}) => {
         <div className="lost">
             {figures.map(figure =>
             <div key={figure.id}>
-                {figure.logo && <img width={20} height={20} src={figure.logo}/>}
+                {figure.logo && <img width={30} height={30} src={figure.logo}/>}
             </div>
             )}
         </div>
