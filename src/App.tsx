@@ -7,13 +7,19 @@ import {Colors} from "./models/Colors";
 import Timer from "./components/Timer";
 import Popup from "./components/Popup";
 import TurnHistory from "./components/TurnHistory";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "./redux/store";
+import {setBoard} from "./redux/slices/boardSlices";
 
 function App () {
-  const [board, setBoard] = useState(new Board())
-  const [whitePlayer, setWhitePlayer] = useState(new Player(Colors.WHITE));
-  const [blackPlayer, setBlackPlayer] = useState(new Player(Colors.BLACK));
+  const board = useSelector((state :RootState) => state.global.board);
+  // Player name integration !!!
+  const [whitePlayer, setWhitePlayer] = useState(new Player(Colors.WHITE, "Vlad"));
+  const [blackPlayer, setBlackPlayer] = useState(new Player(Colors.BLACK, "Yourself"));
   const [currentPlayer, setCurrentPlayer] = useState<Player | null>(null);
   const [playersNames, setPlayersNames] = useState<String[]>(["Yourself","Vlad"]);
+
+  const dispatch = useDispatch();
 
   useEffect(()=> {
     restart();
@@ -37,7 +43,7 @@ function App () {
              }
           }
        }
-    setBoard(newBoard);
+    dispatch(setBoard(newBoard));
        swapPlayer();
   }
 
@@ -55,7 +61,6 @@ function App () {
             playersNames={playersNames}
         />
       <BoardComponent
-      board={board}
       setBoard={setBoard}
       currentPlayer={currentPlayer}
       swapPlayer={swapPlayer}

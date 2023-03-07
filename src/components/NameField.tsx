@@ -3,8 +3,8 @@ import {Player} from "../models/Player";
 import {Colors} from "../models/Colors";
 import LostFigures from "./LostFigures";
 import {Figure} from "../models/figures/Figure";
-import ub from "../assets/ub.png";
-import uw from "../assets/uw.png";
+const ub = require("../assets/ub.png");
+const uw = require("../assets/uw.png");
 interface NameFieldProps {
     color: Colors;
     currentPlayer : Player | null;

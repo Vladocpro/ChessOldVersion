@@ -1,6 +1,6 @@
 import {Colors} from "../Colors";
-import logo from "../../assets/bk.png"
 import {Cell} from "../Cell";
+const logo = require("../../assets/bk.png");
 
 export enum FigureNames {
    Figure = "Figure",

@@ -1,8 +1,8 @@
 import {Figure, FigureNames} from "./Figure";
 import {Colors} from "../Colors";
 import {Cell} from "../Cell";
-import blackLogo from "../../assets/bn.png";
-import whiteLogo from "../../assets/wn.png";
+const blackLogo = require("../../assets/bn.png");
+const whiteLogo = require("../../assets/wn.png");
 
 export class Knight extends Figure {
     constructor(color: Colors, cell: Cell) {

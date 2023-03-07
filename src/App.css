@@ -20,6 +20,7 @@
   border-radius: 10px;
 }
 .cell {
+  position: relative;
   width: 72px;
   height: 72px;
   display: flex;
@@ -206,40 +207,23 @@
   background-color: white;
   margin-top: 8px;
 }
-.notationNumber {
-  position: relative;
-  bottom: 20px;
-  right: 25px;
-}
 .notationLetter {
-  position: relative;
-  top: 20px;
-  left: 25px;
+  position: absolute;
+  top: 48px;
+  left: 59px;
 }
-.notationLetterSpecial {
-  position: relative;
-  top: 20px;
-  left: 30px;
-  color: white;
+.notationNumber {
+  position: absolute;
+  bottom: 48px;
+  right: 59px;
 }
-.notationNumberSpecial {
-  position: relative;
-  bottom: 20px;
-  right: 30px;
-  color: white;
-}
-.notationNumberBlack {
+.notationColorBlack {
   color: #7ca95d;
 }
-.notationNumberWhite {
+.notationColorWhite {
   color: white;
 }
-.notationLetterWhite {
-  color: white;
-}
-.notationLetterBlack {
-  color: #7ca95d;
-}
+
 .movesRow {
   /*display: flex;*/
   /*justify-content: space-between;*/

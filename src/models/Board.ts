@@ -25,21 +25,20 @@ export class Board {
             } else {
                row.push(new Cell(this, j, i, Colors.WHITE, null,letters[j] + (9-i-1))) // white cells
             }
-            
          }
          this.cells.push(row);
          
       }
    }
 
-   public getCopyBoard(): Board {
-      const newBoard = new Board();
-      newBoard.cells = this.cells;
-      newBoard.moveHist = this.moveHist;
-      newBoard.lostWhiteFigures = this.lostWhiteFigures;
-      newBoard.lostBlackFigures = this.lostBlackFigures;
-      return newBoard;
-   }
+   // public getCopyBoard(): Board {
+   //    const newBoard = new Board();
+   //    newBoard.cells = this.cells;
+   //    newBoard.moveHist = this.moveHist;
+   //    newBoard.lostWhiteFigures = this.lostWhiteFigures;
+   //    newBoard.lostBlackFigures = this.lostBlackFigures;
+   //    return newBoard;
+   // }
    public highlightCells(selectedCell: Cell | null) {
       if(selectedCell?.figure) {
          for (let i = 0; i < selectedCell.figure?.cellsToMove.length; i++) {
@@ -56,21 +55,9 @@ export class Board {
          }
       }
    }
-
    public getCells() : Cell[][]{
       return this.cells;
    }
-
-   public getKing(color : Colors ) : Cell  {
-      for (let i = 0; i < 8; i++) {
-         for (let j = 0; j < 8; j++) {
-            if(this.cells[i][j].figure?.name === FigureNames.King && this.cells[i][j].figure?.color !== color)  return this.cells[i][j];
-         }
-      }
-      return this.cells[7][7];
-   }
-
-
    public getCell(x: number, y: number){
       return this.cells[y][x];
    }
@@ -112,10 +99,6 @@ export class Board {
          new King(Colors.WHITE, this.getCell(4,7));
 
    }
-
-   // public addFisherFigures() {
-   //
-   // }
 
 
    public addFigures() {

@@ -1,8 +1,8 @@
 import {Figure, FigureNames} from "./Figure";
 import {Colors} from "../Colors";
 import {Cell} from "../Cell";
-import blackLogo from "../../assets/bp.png";
-import whiteLogo from "../../assets/wp.png";
+const blackLogo =  require("../../assets/bp.png");
+const whiteLogo =  require("../../assets/wp.png");
 
 export class Pawn extends Figure {
 

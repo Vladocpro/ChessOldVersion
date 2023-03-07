@@ -7,9 +7,11 @@ import NameField from "./NameField";
 import {Figure, FigureNames} from "../models/figures/Figure";
 import {Colors} from "../models/Colors";
 import Popup from "./Popup";
+import {getKing} from "../logic/boardLogic";
+import {useSelector} from "react-redux";
+import {RootState} from "../redux/store";
 
 interface BoardProps {
-   board: Board;
    setBoard: (board: Board) => void;
    currentPlayer : Player | null;
    swapPlayer: ()=>void;
@@ -19,17 +21,19 @@ interface BoardProps {
    handleRestart: ()=>void;
 }
 
-const BoardComponent: FC<BoardProps> = ({board: Board, setBoard, currentPlayer, swapPlayer, lostBlackFigures, lostWhiteFigures, playersNames, handleRestart}) => {
+const BoardComponent: FC<BoardProps> = ({setBoard, currentPlayer, swapPlayer, lostBlackFigures, lostWhiteFigures, playersNames, handleRestart}) => {
     const [selectedCell, setSelectedCell] = useState<Cell | null>(null);
     // const [figureAttackingKing, setFigureAttackingKing] = useState<Figure | null>(null);
       let figureAttackingKing :Figure | null = null;
       const [winningPopup, setWinningPopup] = useState<boolean>(false)
+      const board = useSelector((state :RootState) => state.global.board);
+
      function click(cell : Cell) {
         //  selectingCell
         if(cell.figure?.color === currentPlayer?.color) {
-            cell?.figure?.getAvailableCells();
+            cell.figure?.getAvailableCells();
             // possible bug with check because of availability cells
-            if(selectedCell) selectedCell.board.unHighlightCells(selectedCell);
+            if(selectedCell) board.unHighlightCells(selectedCell);
             setSelectedCell(cell);
             return;
         }
@@ -46,21 +50,20 @@ const BoardComponent: FC<BoardProps> = ({board: Board, setBoard, currentPlayer, 
                         if(gameStatus()?.bool) {
                             // updateBoard();
                            setWinningPopup(true)
-                           //  alert("checkMate  " + gameStatus().color + " won")
                            handleRestart();
                         }
                     }
                         swapPlayer();
                         setSelectedCell(null);
                         updateBoard();
-                        Board.getCells();
+                        board.getCells();
                 }
             }
         }
     }
     function checkCondition(cell : Cell) {
        let bool = false;
-         const cells = Board.getCells();
+         const cells = board.getCells();
          // reset blockingCells
         for (let i = 0; i < 8; i++) {
             for (let j = 0; j < 8; j++) {
@@ -86,17 +89,17 @@ const BoardComponent: FC<BoardProps> = ({board: Board, setBoard, currentPlayer, 
            // refactor
             if (target?.figure?.color === Colors.BLACK) {
                 if (target.x !== 7) {
-                    Board.getCell(target.x + 1, target.y + 1).setBlockingKing(Colors.WHITE, true);
+                   board.getCell(target.x + 1, target.y + 1).setBlockingKing(Colors.WHITE, true);
                 }
                 if (target.x !== 0) {
-                    Board.getCell(target.x - 1, target.y + 1).setBlockingKing(Colors.WHITE,true);
+                   board.getCell(target.x - 1, target.y + 1).setBlockingKing(Colors.WHITE,true);
                 }
             } else {
                 if (target.x !== 7) {
-                    Board.getCell(target.x + 1, target.y - 1).setBlockingKing(Colors.BLACK,true);
+                   board.getCell(target.x + 1, target.y - 1).setBlockingKing(Colors.BLACK,true);
                 }
                 if (target.x !== 0) {
-                    Board.getCell(target.x - 1, target.y - 1).setBlockingKing(Colors.BLACK,true);
+                   board.getCell(target.x - 1, target.y - 1).setBlockingKing(Colors.BLACK,true);
                 }
             }
         }
@@ -116,8 +119,8 @@ const BoardComponent: FC<BoardProps> = ({board: Board, setBoard, currentPlayer, 
 
     }
     function gameStatus()  {
-         let whiteKing = Board.getKing(Colors.BLACK);
-         let blackKing = Board.getKing(Colors.WHITE);
+         let whiteKing = getKing(Colors.BLACK, board);
+         let blackKing = getKing(Colors.WHITE, board);
          whiteKing.figure?.getAvailableCells();
          blackKing.figure?.getAvailableCells();
          let obj = {
@@ -148,36 +151,16 @@ const BoardComponent: FC<BoardProps> = ({board: Board, setBoard, currentPlayer, 
               figureAttackingKing = null; // if no one attacking king we should set that to null to avoid bugs
          }
          if(!obj.bool) {   // if no one attacking king there is no point in doing that
-             const cells = Board.getCells();
+             const cells = board.getCells();
              let cellsToMove = figureAttackingKing?.cellsToMove;
              for (let i = 0; i < 8; i++) {
                  for (let j = 0; j < 8; j++) {
                      const target = cells[i][j];
                      if(target.figure?.color !== figureAttackingKing?.color) {
-                         // target.figure?.updateCellsToMove([]);
-                         // if (target.figure?.name === FigureNames.Queen || target.figure?.name === FigureNames.Rook) {
-                         //     target.horizontalAndVertical([])
-                         //     if(!preventCheckMate(target.figure?.cellsToMove)) {
-                         //         return obj;
-                         //     }
-                         //     target.figure?.updateCellsToMove([]);
-                         // }
-                         // if (target.figure?.name === FigureNames.Queen || target.figure?.name === FigureNames.Bishop) {
-                         //     target.diagonal([]);
-                         //     if(!preventCheckMate(target.figure?.cellsToMove)) {
-                         //         return obj;
-                         //     }
-                         //     target.figure?.updateCellsToMove([]);
-                         // }
-                         // else
-
-
-
                          target.figure?.getAvailableCells();
                          if(!preventCheckMate(target.figure?.cellsToMove)) {
                              return obj;
                          }
-
 
                      }
                  }
@@ -206,13 +189,13 @@ const BoardComponent: FC<BoardProps> = ({board: Board, setBoard, currentPlayer, 
     }, [selectedCell])
 
     function highlightCells(selectedCell : Cell) {
-        Board.highlightCells(selectedCell)
+       board.highlightCells(selectedCell)
         updateBoard()
     }
 
     function updateBoard() {
-        const newBoard = Board.getCopyBoard()
-        setBoard(newBoard)
+       const newBoard = structuredClone(board)
+       setBoard(newBoard)
     }
 
   return (
@@ -222,7 +205,7 @@ const BoardComponent: FC<BoardProps> = ({board: Board, setBoard, currentPlayer, 
          }
           <NameField color={Colors.BLACK} currentPlayer={currentPlayer} name={playersNames[0]} lostWhiteFigures={lostWhiteFigures} lostBlackFigures={lostBlackFigures}/>
           <div className='board' >
-              {Board.cells.map((row, index) =>
+              {board.cells.map((row, index) =>
                   <React.Fragment key={index}>
                       {row.map(cell =>
                           <CellComponent
