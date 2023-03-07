@@ -1,26 +1,29 @@
 import React, {FC} from 'react';
 import {Player} from "../models/Player";
 import {Colors} from "../models/Colors";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../redux/store";
+import {setShowPopup} from "../redux/slices/globalSlice";
 
 interface PopupProps{
-    currentPlayer: Player | null;
-    playersNames: String[];
     handleRestart: ()=> void;
-    setPopup: (bool : boolean)=>void;
     subTitle: string;
 }
 
-const Popup: FC<PopupProps> = ({currentPlayer, playersNames, handleRestart, setPopup, subTitle}) => {
+const Popup: FC<PopupProps> = ({handleRestart, subTitle}) => {
+    const players = useSelector((state: RootState) => state.global.players)
+    const dispatch = useDispatch()
+
     return (
     <div className="popup">
         <div className="popupBox">
             <div className="popupHeader">
-                <h2 className="popupTitle">{currentPlayer?.color === Colors.WHITE ? playersNames[0]: playersNames[1]} Won!</h2>
+                <h2 className="popupTitle">{players.currentPlayer.name} Won!</h2>
                 <h2 className="popupSubTitle">{subTitle}</h2>
             </div>
             <button className="popupClose" onClick={() => {
                 handleRestart();
-                setPopup(false);
+                dispatch(setShowPopup(false));
             }}>Restart Game</button>
         </div>
     </div>

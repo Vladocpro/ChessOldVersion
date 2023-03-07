@@ -3,19 +3,18 @@ import {Player} from "../models/Player";
 import {Colors} from "../models/Colors";
 import LostFigures from "./LostFigures";
 import {Figure} from "../models/figures/Figure";
+import {useSelector} from "react-redux";
+import {RootState} from "../redux/store";
 const ub = require("../assets/ub.png");
 const uw = require("../assets/uw.png");
 interface NameFieldProps {
     color: Colors;
-    currentPlayer : Player | null;
     lostBlackFigures : Figure[];
     lostWhiteFigures : Figure[];
-    name: String;
 }
-const NameField: FC<NameFieldProps> = ({color, lostBlackFigures,lostWhiteFigures,name})  => {
-    // window.localStorage.clear();
-    // if(window.localStorage.getItem("name1"))  window.localStorage.setItem("name2" , `${name}`);
-    // else   window.localStorage.setItem("name1" , `${name}`);
+const NameField: FC<NameFieldProps> = ({color, lostBlackFigures,lostWhiteFigures})  => {
+    const  players = useSelector((state :RootState) => state.global.players);
+
     let names = [];
     function pushNames() {
         if(names.length <= 2)
@@ -30,7 +29,7 @@ const NameField: FC<NameFieldProps> = ({color, lostBlackFigures,lostWhiteFigures
                     : <img src={uw} style={{width: "54px", height: "54px", borderRadius: "10px 0 0 10px"}} alt=""/>
                 }
                 <div>
-                    <span className="nameSpan">{name}</span>
+                    <span className="nameSpan">{Colors.BLACK ? players.blackPlayer.name : players.whitePlayer.name}</span>
                     {color === Colors.WHITE
                         ? <LostFigures figures={lostBlackFigures}/>
                         : <LostFigures figures={lostWhiteFigures}/>

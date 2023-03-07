@@ -2,35 +2,31 @@ import React, {FC, useEffect, useState} from 'react'
 import {Board} from '../models/Board'
 import CellComponent from './CellComponent';
 import {Cell} from "../models/Cell";
-import {Player} from "../models/Player";
 import NameField from "./NameField";
 import {Figure, FigureNames} from "../models/figures/Figure";
 import {Colors} from "../models/Colors";
 import Popup from "./Popup";
 import {getKing} from "../logic/boardLogic";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../redux/store";
+import {setBoard, setShowPopup, switchCurrentPlayer} from "../redux/slices/globalSlice";
 
 interface BoardProps {
-   setBoard: (board: Board) => void;
-   currentPlayer : Player | null;
-   swapPlayer: ()=>void;
    lostBlackFigures: Figure[];
    lostWhiteFigures: Figure[];
-   playersNames: String[];
    handleRestart: ()=>void;
 }
 
-const BoardComponent: FC<BoardProps> = ({setBoard, currentPlayer, swapPlayer, lostBlackFigures, lostWhiteFigures, playersNames, handleRestart}) => {
-    const [selectedCell, setSelectedCell] = useState<Cell | null>(null);
+const BoardComponent: FC<BoardProps> = ({  lostBlackFigures, lostWhiteFigures, handleRestart}) => {
+      const [selectedCell, setSelectedCell] = useState<Cell | null>(null);
     // const [figureAttackingKing, setFigureAttackingKing] = useState<Figure | null>(null);
       let figureAttackingKing :Figure | null = null;
-      const [winningPopup, setWinningPopup] = useState<boolean>(false)
-      const board = useSelector((state :RootState) => state.global.board);
+      const {board, showPopup, players} = useSelector((state :RootState) => state.global);
+      const dispatch = useDispatch()
 
      function click(cell : Cell) {
         //  selectingCell
-        if(cell.figure?.color === currentPlayer?.color) {
+        if(cell.figure?.color === players.currentPlayer.color) {
             cell.figure?.getAvailableCells();
             // possible bug with check because of availability cells
             if(selectedCell) board.unHighlightCells(selectedCell);
@@ -49,11 +45,11 @@ const BoardComponent: FC<BoardProps> = ({setBoard, currentPlayer, swapPlayer, lo
                     if(figureAttackingKing !== null) {
                         if(gameStatus()?.bool) {
                             // updateBoard();
-                           setWinningPopup(true)
+                           dispatch(setShowPopup(true));
                            handleRestart();
                         }
                     }
-                        swapPlayer();
+                        dispatch(switchCurrentPlayer())
                         setSelectedCell(null);
                         updateBoard();
                         board.getCells();
@@ -194,16 +190,16 @@ const BoardComponent: FC<BoardProps> = ({setBoard, currentPlayer, swapPlayer, lo
     }
 
     function updateBoard() {
-       const newBoard = structuredClone(board)
-       setBoard(newBoard)
+       const newBoard : Board = structuredClone(board)
+       dispatch(setBoard(newBoard))
     }
 
   return (
       <div>
          {
-            winningPopup && <Popup currentPlayer={currentPlayer} playersNames={playersNames} handleRestart={handleRestart} setPopup={setWinningPopup} subTitle="by Checkmate"/>
+            showPopup && <Popup  handleRestart={handleRestart}  subTitle="by Checkmate"/>
          }
-          <NameField color={Colors.BLACK} currentPlayer={currentPlayer} name={playersNames[0]} lostWhiteFigures={lostWhiteFigures} lostBlackFigures={lostBlackFigures}/>
+          <NameField color={Colors.BLACK}  lostWhiteFigures={lostWhiteFigures} lostBlackFigures={lostBlackFigures}/>
           <div className='board' >
               {board.cells.map((row, index) =>
                   <React.Fragment key={index}>
@@ -218,7 +214,7 @@ const BoardComponent: FC<BoardProps> = ({setBoard, currentPlayer, swapPlayer, lo
                   </React.Fragment>
               )}
           </div>
-          <NameField color={Colors.WHITE} currentPlayer={currentPlayer} name={playersNames[1]} lostBlackFigures={lostBlackFigures} lostWhiteFigures={lostWhiteFigures}/>
+          <NameField color={Colors.WHITE}  lostBlackFigures={lostBlackFigures} lostWhiteFigures={lostWhiteFigures}/>
       </div>
 
   );
