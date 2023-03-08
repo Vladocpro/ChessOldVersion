@@ -4,11 +4,15 @@ import {Colors} from "../../models/Colors";
 import {Figure} from "../../models/figures/Figure";
 import {Board} from "../../models/Board";
 
+interface showPopupAction {
+   showPopup: boolean,
+   subtitle?: string
+}
 
 interface globalState {
    board: Board | undefined,
    players: { whitePlayer: Player, blackPlayer: Player, currentPlayer: Player },
-   showPopup: boolean,
+   popup: { showPopup: boolean, subtitle: string },
    lostBlackFigures: Figure[],
    lostWhiteFigures: Figure[],
 }
@@ -16,7 +20,7 @@ interface globalState {
 const initialState : globalState= {
    board:  undefined,
    players: {whitePlayer: new Player(Colors.WHITE, "Vlad", true), blackPlayer: new Player(Colors.BLACK, "Yourself", false), currentPlayer: new Player(Colors.WHITE, "", true)},
-   showPopup: false,
+   popup: {showPopup: false, subtitle: ""},
    lostBlackFigures : [],
    lostWhiteFigures : []
 }
@@ -40,15 +44,20 @@ export const globalSlice = createSlice({
             state.players.currentPlayer = state.players.whitePlayer;
          }
       },
-      setShowPopup: (state, action:PayloadAction<boolean>) => {
-         state.showPopup = action.payload
+      setShowPopup: (state, action:PayloadAction<showPopupAction>) => {
+         if(action.payload.subtitle) state.popup.subtitle = action.payload.subtitle
+         state.popup.showPopup = action.payload.showPopup
       },
       pushLostFigure : (state, action:PayloadAction<Figure>) => {
          if(action.payload.color === Colors.WHITE) state.lostWhiteFigures.push(action.payload)
          else state.lostBlackFigures.push(action.payload)
-      }
+      },
+      removeLostFigures : (state) => {
+         state.lostBlackFigures = [];
+         state.lostWhiteFigures = [];
+      },
    }
 })
 
-export const {setBoard, switchCurrentPlayer, setShowPopup, pushLostFigure} = globalSlice.actions
+export const {setBoard, switchCurrentPlayer, setShowPopup, pushLostFigure, removeLostFigures} = globalSlice.actions
 export const globalReducer = globalSlice.reducer;

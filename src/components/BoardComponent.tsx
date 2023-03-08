@@ -16,7 +16,7 @@ import { restart} from "../logic/boardLogic";
 const BoardComponent = () => {
       const [selectedCell, setSelectedCell] = useState<Cell | null>(null);
       let figureAttackingKing :Figure | null = null;
-      const {board, showPopup, players} = useSelector((state :RootState) => state.global);
+      const {board, popup, players} = useSelector((state :RootState) => state.global);
       const dispatch = useDispatch()
 
      function click(cell : Cell) {
@@ -40,7 +40,7 @@ const BoardComponent = () => {
                     if(figureAttackingKing !== null) {
                         if(gameStatus()?.bool) {
                             // updateBoard();
-                           dispatch(setShowPopup(true));
+                           dispatch(setShowPopup({showPopup: true, subtitle: "by Checkmate"}));
                            restart();
                         }
                     }
@@ -194,7 +194,7 @@ const BoardComponent = () => {
   return (
       <div>
          {
-            showPopup && <Popup  subTitle="by Checkmate"/>
+            popup.showPopup && <Popup/>
          }
           <NameField color={Colors.BLACK}/>
           <div className='board' >

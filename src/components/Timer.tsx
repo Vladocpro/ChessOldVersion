@@ -3,23 +3,26 @@ import {Colors} from "../models/Colors";
 import Popup from "./Popup";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../redux/store";
-import {setShowPopup} from "../redux/slices/globalSlice";
+import { setShowPopup} from "../redux/slices/globalSlice";
 import {restart} from "../logic/boardLogic";
+import {decrementBlackTime, decrementWhiteTime} from "../redux/slices/timerSlice";
 
 
 const Timer  = () => {
-    const[blackTime, setBlackTime] = useState<number>(899);
-    const[whiteTime, setWhiteTime] = useState<number>(899);
+    // const[blackTime, setBlackTime] = useState<number>(899);
+    // const[whiteTime, setWhiteTime] = useState<number>(899);
+    const {blackTime, whiteTime} = useSelector((state: RootState) => state.timer)
     const timer = useRef<null | ReturnType<typeof setInterval>>()
     const players = useSelector((state: RootState) => state.global.players)
-    const popup = useSelector((state: RootState) => state.global.showPopup)
+    const popup = useSelector((state: RootState) => state.global.popup)
     const dispatch = useDispatch()
 
     useEffect(() => {
-        // if(whiteTime > 0 && blackTime > 0)    // if something goes wrong after checkmate unslash this
-            startTimer(true);
+        //     // if something goes wrong after checkmate unslash this
+        if(whiteTime > 0 && blackTime > 0) startTimer(true);
+            if(!popup.showPopup) startTimer(true);
         // else startTimer(false)
-    }, [players.currentPlayer])
+    }, [players.currentPlayer, popup.showPopup])
 
     useEffect(() => {
         if(whiteTime <= 0 || blackTime <= 0) startTimer(false);
@@ -30,33 +33,32 @@ const Timer  = () => {
             clearInterval(timer.current)
         }
         if(!going)  return;
-        const callback = players.currentPlayer.color === Colors.WHITE? decrementWhiteTime : decrementBlackTime
+        const callback = players.currentPlayer.color === Colors.WHITE? decWhiteTime : decBlackTime
         timer.current = setInterval(callback, 1000)
     }
     function switchWaiter() {
         if(blackTime === 0 || whiteTime === 0) popupSwitch();
     }
-    function decrementBlackTime() {
-        setBlackTime(prev =>  prev - 1);
-
+    function decBlackTime() {
+        dispatch(decrementBlackTime())
     }
-    function decrementWhiteTime() {
-         setWhiteTime(prev => prev - 1);
+    function decWhiteTime() {
+        dispatch(decrementWhiteTime())
     }
 
     const handleRestart = ()=> {
-        setBlackTime(899);
-        setWhiteTime(899);
-        dispatch(setShowPopup(false))
+        // setBlackTime(899);
+        // setWhiteTime(899);
+        dispatch(setShowPopup({showPopup:false}))
         restart();
         startTimer(true);
     }
     function popupSwitch() {
         // setPopup(!!popup)
-        if(!popup)  {
-            dispatch(setShowPopup(true))
+        if(!popup.showPopup)  {
+            dispatch(setShowPopup({showPopup:true, subtitle: "on Time"}))
         }
-        else dispatch(setShowPopup(false))
+        else  dispatch(setShowPopup({showPopup:false}))
 
     }
 
@@ -83,11 +85,6 @@ const Timer  = () => {
 
                 </div>
             </div>
-            {popup &&
-                <Popup
-                    subTitle="on Time"
-                />
-            }
         </div>
     );
 };

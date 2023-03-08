@@ -2,8 +2,9 @@ import {Cell} from "../models/Cell";
 import {Colors} from "../models/Colors";
 import {FigureNames} from "../models/figures/Figure";
 import {store} from "../redux/store";
-import {setBoard, switchCurrentPlayer} from "../redux/slices/globalSlice";
+import {removeLostFigures, setBoard, switchCurrentPlayer} from "../redux/slices/globalSlice";
 import {Board} from "../models/Board";
+import {resetTimer, setTimer} from "../redux/slices/timerSlice";
 
 
 
@@ -26,9 +27,11 @@ export function restart() {
    newBoard.initCells();
    newBoard.addFigures();
    store.dispatch(setBoard(newBoard));
+   store.dispatch(removeLostFigures());
    if(currentPlayer.color !== Colors.WHITE) {
       store.dispatch(switchCurrentPlayer())
    }
+   store.dispatch(resetTimer())
 }
 
 

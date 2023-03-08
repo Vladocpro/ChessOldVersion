@@ -1,10 +1,12 @@
 import {configureStore} from "@reduxjs/toolkit";
 import {globalReducer} from "./slices/globalSlice";
+import {timerReducer} from "./slices/timerSlice";
 
 
 export const store = configureStore({
    reducer: {
-      global: globalReducer
+      global: globalReducer,
+      timer: timerReducer
    },
    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
       serializableCheck: false

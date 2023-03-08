@@ -21,7 +21,7 @@ const NameField: FC<NameFieldProps> = ({color})  => {
                     : <img src={uw} style={{width: "54px", height: "54px", borderRadius: "10px 0 0 10px"}} alt=""/>
                 }
                 <div>
-                    <span className="nameSpan">{Colors.BLACK ? players.blackPlayer.name : players.whitePlayer.name}</span>
+                    <span className="nameSpan">{color === Colors.BLACK ? players.blackPlayer.name : players.whitePlayer.name}</span>
                     {color === Colors.WHITE
                         ? <LostFigures figures={lostBlackFigures}/>
                         : <LostFigures figures={lostWhiteFigures}/>
