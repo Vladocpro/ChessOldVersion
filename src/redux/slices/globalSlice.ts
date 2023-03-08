@@ -1,8 +1,9 @@
-import {Board} from "../../models/Board";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {Player} from "../../models/Player";
 import {Colors} from "../../models/Colors";
 import {Figure} from "../../models/figures/Figure";
+import {Board} from "../../models/Board";
+
 
 interface globalState {
    board: Board | undefined,
@@ -13,7 +14,7 @@ interface globalState {
 }
 
 const initialState : globalState= {
-   board: new Board(),
+   board:  undefined,
    players: {whitePlayer: new Player(Colors.WHITE, "Vlad", true), blackPlayer: new Player(Colors.BLACK, "Yourself", false), currentPlayer: new Player(Colors.WHITE, "", true)},
    showPopup: false,
    lostBlackFigures : [],
