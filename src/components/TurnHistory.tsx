@@ -17,7 +17,7 @@ const TurnHistory: FC<TurnHistoryProps> = ({moveHist}) => {
             <div className="turnHistoryLabel">Chess Moves</div>
             <hr className="hrTurnHistory"/>
             <div className="movesContainer"
-                 // style={{overflowY: moveHist.length > 14 ? "scroll" : "hidden" , borderRadius: moveHist.length > 14 ? "0 0 0 6px" : "0"}}
+                 style={{overflowY: moveHist && moveHist.length > 14 ? "scroll" : "hidden" , borderRadius: moveHist && moveHist.length > 14 ? "0 0 0 6px" : "0"}}
             >
                 {moveHist?.map((move, index) =>
                 <div key={move.turnCounter} className="movesRow" style={{ borderRadius: index > 13 && moveHist.length -1 === index ? "0 0 0 6px" : ""}}>
