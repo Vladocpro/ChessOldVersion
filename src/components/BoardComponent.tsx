@@ -19,7 +19,6 @@ interface BoardProps {
 
 const BoardComponent: FC<BoardProps> = ({  lostBlackFigures, lostWhiteFigures, handleRestart}) => {
       const [selectedCell, setSelectedCell] = useState<Cell | null>(null);
-    // const [figureAttackingKing, setFigureAttackingKing] = useState<Figure | null>(null);
       let figureAttackingKing :Figure | null = null;
       const {board, showPopup, players} = useSelector((state :RootState) => state.global);
       const dispatch = useDispatch()
@@ -181,16 +180,16 @@ const BoardComponent: FC<BoardProps> = ({  lostBlackFigures, lostWhiteFigures, h
 
     useEffect( () => {
         if(selectedCell) highlightCells(selectedCell);
-
     }, [selectedCell])
 
     function highlightCells(selectedCell : Cell) {
-       board.highlightCells(selectedCell)
+        board.highlightCells(selectedCell)
         updateBoard()
     }
 
     function updateBoard() {
-       const newBoard : Board = structuredClone(board)
+       const newBoard : Board = new Board();
+       Object.assign(newBoard, board)
        dispatch(setBoard(newBoard))
     }
 
