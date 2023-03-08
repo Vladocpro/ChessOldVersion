@@ -31,14 +31,6 @@ export class Board {
       }
    }
 
-   // public getCopyBoard(): Board {
-   //    const newBoard = new Board();
-   //    newBoard.cells = this.cells;
-   //    newBoard.moveHist = this.moveHist;
-   //    newBoard.lostWhiteFigures = this.lostWhiteFigures;
-   //    newBoard.lostBlackFigures = this.lostBlackFigures;
-   //    return newBoard;
-   // }
    public highlightCells(selectedCell: Cell | null) {
       if(selectedCell?.figure) {
          for (let i = 0; i < selectedCell.figure?.cellsToMove.length; i++) {
@@ -54,6 +46,14 @@ export class Board {
             this.cells[selectedCell.figure?.cellsToMove[i].y][selectedCell.figure?.cellsToMove[i].x].available = false;
          }
       }
+   }
+    public getKing(color : Colors, board : Board ) : Cell  {
+      for (let i = 0; i < 8; i++) {
+         for (let j = 0; j < 8; j++) {
+            if(board.cells[i][j].figure?.name === FigureNames.King && board.cells[i][j].figure?.color !== color)  return board.cells[i][j];
+         }
+      }
+      return board.cells[7][7];
    }
    public getCells() : Cell[][]{
       return this.cells;

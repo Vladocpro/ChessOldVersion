@@ -4,13 +4,13 @@ import {Colors} from "../models/Colors";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../redux/store";
 import {setShowPopup} from "../redux/slices/globalSlice";
+import {restart} from "../logic/boardLogic";
 
 interface PopupProps{
-    handleRestart: ()=> void;
     subTitle: string;
 }
 
-const Popup: FC<PopupProps> = ({handleRestart, subTitle}) => {
+const Popup: FC<PopupProps> = ({ subTitle}) => {
     const players = useSelector((state: RootState) => state.global.players)
     const dispatch = useDispatch()
 
@@ -22,7 +22,7 @@ const Popup: FC<PopupProps> = ({handleRestart, subTitle}) => {
                 <h2 className="popupSubTitle">{subTitle}</h2>
             </div>
             <button className="popupClose" onClick={() => {
-                handleRestart();
+                restart();
                 dispatch(setShowPopup(false));
             }}>Restart Game</button>
         </div>

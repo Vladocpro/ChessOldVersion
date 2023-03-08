@@ -2,6 +2,8 @@ import {Board} from "./Board";
 import {Colors} from "./Colors";
 import {Figure, FigureNames} from "./figures/Figure";
 import {Queen} from "./figures/Queen";
+import {store} from "../redux/store";
+import {pushLostFigure} from "../redux/slices/globalSlice";
 
 export class Cell {
    readonly x: number;
@@ -193,10 +195,6 @@ export class Cell {
       }
    }
 
-   addLostFigure(figure : Figure) {
-      if(figure.color === Colors.BLACK) this.board.lostBlackFigures.push(figure)
-      else this.board.lostWhiteFigures.push(figure)
-   }
    addMoves(target : Cell, hadFigure: boolean) {
       let cellMove = target.notationCoordinate;
       if(hadFigure) cellMove = "x" + cellMove;
@@ -220,7 +218,7 @@ export class Cell {
       if(this.figure) {
          this.figure.moveFigure(target);
          if(target.figure) {
-            this.addLostFigure(target.figure);
+            store.dispatch(pushLostFigure(target.figure));
             hadFigure = true;
          }
          target.setFigure(this.figure);

@@ -6,7 +6,7 @@ import {Cell} from "../models/Cell";
 import {MoveHist} from "../models/MoveHist";
 import "../App.css"
 interface TurnHistoryProps {
-    moveHist:MoveHist[];
+    moveHist:MoveHist[] | undefined;
 }
 
 const TurnHistory: FC<TurnHistoryProps> = ({moveHist}) => {
@@ -16,8 +16,10 @@ const TurnHistory: FC<TurnHistoryProps> = ({moveHist}) => {
         <div className="historyMainBlock">
             <div className="turnHistoryLabel">Chess Moves</div>
             <hr className="hrTurnHistory"/>
-            <div className="movesContainer" style={{overflowY: moveHist.length > 14 ? "scroll" : "hidden" , borderRadius: moveHist.length > 14 ? "0 0 0 6px" : "0"}}>
-                {moveHist.map((move, index) =>
+            <div className="movesContainer"
+                 // style={{overflowY: moveHist.length > 14 ? "scroll" : "hidden" , borderRadius: moveHist.length > 14 ? "0 0 0 6px" : "0"}}
+            >
+                {moveHist?.map((move, index) =>
                 <div key={move.turnCounter} className="movesRow" style={{ borderRadius: index > 13 && moveHist.length -1 === index ? "0 0 0 6px" : ""}}>
                     <span className="historySpan">{move.turnCounter}</span>
                     <div className="historyContainer">

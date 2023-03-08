@@ -4,12 +4,10 @@ import Popup from "./Popup";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../redux/store";
 import {setShowPopup} from "../redux/slices/globalSlice";
+import {restart} from "../logic/boardLogic";
 
-interface TimerProps {
-    restart: () => void;
-}
 
-const Timer: FC<TimerProps> = ({restart}) => {
+const Timer  = () => {
     const[blackTime, setBlackTime] = useState<number>(899);
     const[whiteTime, setWhiteTime] = useState<number>(899);
     const timer = useRef<null | ReturnType<typeof setInterval>>()
@@ -87,7 +85,6 @@ const Timer: FC<TimerProps> = ({restart}) => {
             </div>
             {popup &&
                 <Popup
-                    handleRestart={handleRestart}
                     subTitle="on Time"
                 />
             }

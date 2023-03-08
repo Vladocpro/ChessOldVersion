@@ -2,17 +2,22 @@ import {Board} from "../../models/Board";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {Player} from "../../models/Player";
 import {Colors} from "../../models/Colors";
+import {Figure} from "../../models/figures/Figure";
 
 interface globalState {
-   board: Board,
+   board: Board | undefined,
    players: { whitePlayer: Player, blackPlayer: Player, currentPlayer: Player },
-   showPopup: boolean
+   showPopup: boolean,
+   lostBlackFigures: Figure[],
+   lostWhiteFigures: Figure[],
 }
 
 const initialState : globalState= {
    board: new Board(),
-   players: {whitePlayer: new Player(Colors.WHITE, "", true), blackPlayer: new Player(Colors.BLACK, "", false), currentPlayer: new Player(Colors.WHITE, "", true)},
-   showPopup: false
+   players: {whitePlayer: new Player(Colors.WHITE, "Vlad", true), blackPlayer: new Player(Colors.BLACK, "Yourself", false), currentPlayer: new Player(Colors.WHITE, "", true)},
+   showPopup: false,
+   lostBlackFigures : [],
+   lostWhiteFigures : []
 }
 
 
@@ -37,8 +42,12 @@ export const globalSlice = createSlice({
       setShowPopup: (state, action:PayloadAction<boolean>) => {
          state.showPopup = action.payload
       },
+      pushLostFigure : (state, action:PayloadAction<Figure>) => {
+         if(action.payload.color === Colors.WHITE) state.lostWhiteFigures.push(action.payload)
+         else state.lostBlackFigures.push(action.payload)
+      }
    }
 })
 
-export const {setBoard, switchCurrentPlayer, setShowPopup} = globalSlice.actions
+export const {setBoard, switchCurrentPlayer, setShowPopup, pushLostFigure} = globalSlice.actions
 export const globalReducer = globalSlice.reducer;

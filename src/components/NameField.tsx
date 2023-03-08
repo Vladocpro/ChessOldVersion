@@ -9,18 +9,10 @@ const ub = require("../assets/ub.png");
 const uw = require("../assets/uw.png");
 interface NameFieldProps {
     color: Colors;
-    lostBlackFigures : Figure[];
-    lostWhiteFigures : Figure[];
 }
-const NameField: FC<NameFieldProps> = ({color, lostBlackFigures,lostWhiteFigures})  => {
-    const  players = useSelector((state :RootState) => state.global.players);
+const NameField: FC<NameFieldProps> = ({color})  => {
+    const {players, lostBlackFigures, lostWhiteFigures} = useSelector((state :RootState) => state.global);
 
-    let names = [];
-    function pushNames() {
-        if(names.length <= 2)
-        names.push(name);
-    }
-    pushNames();
     return (
         <div style={{ marginBottom: "8px", marginTop: "8px"}}>
             <div className="nameFlex">

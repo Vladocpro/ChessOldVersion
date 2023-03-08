@@ -6,18 +6,14 @@ import NameField from "./NameField";
 import {Figure, FigureNames} from "../models/figures/Figure";
 import {Colors} from "../models/Colors";
 import Popup from "./Popup";
-import {getKing} from "../logic/boardLogic";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../redux/store";
 import {setBoard, setShowPopup, switchCurrentPlayer} from "../redux/slices/globalSlice";
+import { restart} from "../logic/boardLogic";
 
-interface BoardProps {
-   lostBlackFigures: Figure[];
-   lostWhiteFigures: Figure[];
-   handleRestart: ()=>void;
-}
 
-const BoardComponent: FC<BoardProps> = ({  lostBlackFigures, lostWhiteFigures, handleRestart}) => {
+
+const BoardComponent = () => {
       const [selectedCell, setSelectedCell] = useState<Cell | null>(null);
       let figureAttackingKing :Figure | null = null;
       const {board, showPopup, players} = useSelector((state :RootState) => state.global);
@@ -28,7 +24,7 @@ const BoardComponent: FC<BoardProps> = ({  lostBlackFigures, lostWhiteFigures, h
         if(cell.figure?.color === players.currentPlayer.color) {
             cell.figure?.getAvailableCells();
             // possible bug with check because of availability cells
-            if(selectedCell) board.unHighlightCells(selectedCell);
+            if(selectedCell) board?.unHighlightCells(selectedCell);
             setSelectedCell(cell);
             return;
         }
@@ -45,19 +41,20 @@ const BoardComponent: FC<BoardProps> = ({  lostBlackFigures, lostWhiteFigures, h
                         if(gameStatus()?.bool) {
                             // updateBoard();
                            dispatch(setShowPopup(true));
-                           handleRestart();
+                           restart();
                         }
                     }
                         dispatch(switchCurrentPlayer())
                         setSelectedCell(null);
                         updateBoard();
-                        board.getCells();
+                        board?.getCells();
                 }
             }
         }
     }
     function checkCondition(cell : Cell) {
        let bool = false;
+       if (board === undefined) return;
          const cells = board.getCells();
          // reset blockingCells
         for (let i = 0; i < 8; i++) {
@@ -84,17 +81,17 @@ const BoardComponent: FC<BoardProps> = ({  lostBlackFigures, lostWhiteFigures, h
            // refactor
             if (target?.figure?.color === Colors.BLACK) {
                 if (target.x !== 7) {
-                   board.getCell(target.x + 1, target.y + 1).setBlockingKing(Colors.WHITE, true);
+                   board?.getCell(target.x + 1, target.y + 1).setBlockingKing(Colors.WHITE, true);
                 }
                 if (target.x !== 0) {
-                   board.getCell(target.x - 1, target.y + 1).setBlockingKing(Colors.WHITE,true);
+                   board?.getCell(target.x - 1, target.y + 1).setBlockingKing(Colors.WHITE,true);
                 }
             } else {
                 if (target.x !== 7) {
-                   board.getCell(target.x + 1, target.y - 1).setBlockingKing(Colors.BLACK,true);
+                   board?.getCell(target.x + 1, target.y - 1).setBlockingKing(Colors.BLACK,true);
                 }
                 if (target.x !== 0) {
-                   board.getCell(target.x - 1, target.y - 1).setBlockingKing(Colors.BLACK,true);
+                   board?.getCell(target.x - 1, target.y - 1).setBlockingKing(Colors.BLACK,true);
                 }
             }
         }
@@ -114,8 +111,9 @@ const BoardComponent: FC<BoardProps> = ({  lostBlackFigures, lostWhiteFigures, h
 
     }
     function gameStatus()  {
-         let whiteKing = getKing(Colors.BLACK, board);
-         let blackKing = getKing(Colors.WHITE, board);
+         if(board === undefined) return ;
+         let whiteKing = board.getKing(Colors.BLACK, board);
+         let blackKing = board.getKing(Colors.WHITE, board);
          whiteKing.figure?.getAvailableCells();
          blackKing.figure?.getAvailableCells();
          let obj = {
@@ -183,7 +181,7 @@ const BoardComponent: FC<BoardProps> = ({  lostBlackFigures, lostWhiteFigures, h
     }, [selectedCell])
 
     function highlightCells(selectedCell : Cell) {
-        board.highlightCells(selectedCell)
+        board?.highlightCells(selectedCell)
         updateBoard()
     }
 
@@ -196,11 +194,11 @@ const BoardComponent: FC<BoardProps> = ({  lostBlackFigures, lostWhiteFigures, h
   return (
       <div>
          {
-            showPopup && <Popup  handleRestart={handleRestart}  subTitle="by Checkmate"/>
+            showPopup && <Popup  subTitle="by Checkmate"/>
          }
-          <NameField color={Colors.BLACK}  lostWhiteFigures={lostWhiteFigures} lostBlackFigures={lostBlackFigures}/>
+          <NameField color={Colors.BLACK}/>
           <div className='board' >
-              {board.cells.map((row, index) =>
+              {board?.cells.map((row, index) =>
                   <React.Fragment key={index}>
                       {row.map(cell =>
                           <CellComponent
@@ -213,7 +211,7 @@ const BoardComponent: FC<BoardProps> = ({  lostBlackFigures, lostWhiteFigures, h
                   </React.Fragment>
               )}
           </div>
-          <NameField color={Colors.WHITE}  lostBlackFigures={lostBlackFigures} lostWhiteFigures={lostWhiteFigures}/>
+          <NameField color={Colors.WHITE}/>
       </div>
 
   );
