@@ -1,12 +1,14 @@
 import {configureStore} from "@reduxjs/toolkit";
 import {globalReducer} from "./slices/globalSlice";
 import {timerReducer} from "./slices/timerSlice";
+import {boardReducer} from "./slices/boardSlice";
 
 
 export const store = configureStore({
    reducer: {
       global: globalReducer,
-      timer: timerReducer
+      timer: timerReducer,
+      board: boardReducer
    },
    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
       serializableCheck: false

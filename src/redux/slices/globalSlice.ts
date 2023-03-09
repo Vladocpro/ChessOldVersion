@@ -10,7 +10,6 @@ interface showPopupAction {
 }
 
 interface globalState {
-   board: Board | undefined,
    players: { whitePlayer: Player, blackPlayer: Player, currentPlayer: Player },
    popup: { showPopup: boolean, subtitle: string },
    lostBlackFigures: Figure[],
@@ -18,7 +17,6 @@ interface globalState {
 }
 
 const initialState : globalState= {
-   board:  undefined,
    players: {whitePlayer: new Player(Colors.WHITE, "Vlad", true), blackPlayer: new Player(Colors.BLACK, "Yourself", false), currentPlayer: new Player(Colors.WHITE, "", true)},
    popup: {showPopup: false, subtitle: ""},
    lostBlackFigures : [],
@@ -30,9 +28,6 @@ export const globalSlice = createSlice({
    name: "global",
    initialState,
    reducers: {
-      setBoard: (state, action:PayloadAction<Board>) => {
-         state.board = action.payload
-      },
       switchCurrentPlayer: (state) => {
          if(state.players.whitePlayer.isCurrentPlayer) {
             state.players.whitePlayer.isCurrentPlayer = false
@@ -55,9 +50,9 @@ export const globalSlice = createSlice({
       removeLostFigures : (state) => {
          state.lostBlackFigures = [];
          state.lostWhiteFigures = [];
-      },
+      }
    }
 })
 
-export const {setBoard, switchCurrentPlayer, setShowPopup, pushLostFigure, removeLostFigures} = globalSlice.actions
+export const {switchCurrentPlayer, setShowPopup, pushLostFigure, removeLostFigures} = globalSlice.actions
 export const globalReducer = globalSlice.reducer;

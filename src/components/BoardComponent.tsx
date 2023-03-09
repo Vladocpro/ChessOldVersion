@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react'
+import React, { useEffect, useState} from 'react'
 import {Board} from '../models/Board'
 import CellComponent from './CellComponent';
 import {Cell} from "../models/Cell";
@@ -8,23 +8,29 @@ import {Colors} from "../models/Colors";
 import Popup from "./Popup";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../redux/store";
-import {setBoard, setShowPopup, switchCurrentPlayer} from "../redux/slices/globalSlice";
-import { restart} from "../logic/boardLogic";
+import { setShowPopup, switchCurrentPlayer} from "../redux/slices/globalSlice";
+import {boardAnalysis, restart} from "../logic/boardLogic";
+import {setBoard} from "../redux/slices/boardSlice";
 
 
 
 const BoardComponent = () => {
       const [selectedCell, setSelectedCell] = useState<Cell | null>(null);
       let figureAttackingKing :Figure | null = null;
-      const {board, popup, players} = useSelector((state :RootState) => state.global);
+      const {popup, players} = useSelector((state :RootState) => state.global);
+      const board = useSelector((state :RootState) => state.board.board);
+      const figuresProtectingWhiteKing = useSelector((state :RootState) => state.board.figuresProtectingWhiteKing);
       const dispatch = useDispatch()
+   // useEffect(() => {
+   //    console.log(figuresProtectingWhiteKing)
+   // }, [figuresProtectingWhiteKing]);
+
 
      function click(cell : Cell) {
         //  selectingCell
         if(cell.figure?.color === players.currentPlayer.color) {
             cell.figure?.getAvailableCells();
-            // possible bug with check because of availability cells
-            if(selectedCell) board?.unHighlightCells(selectedCell);
+            if(selectedCell && board) board.unHighlightCells(selectedCell);
             setSelectedCell(cell);
             return;
         }
@@ -36,10 +42,12 @@ const BoardComponent = () => {
                       console.log(figureAttackingKing.cellsToMove)
                    }
                    selectedCell.moveFigure(cell);
-                   checkCondition(cell);
+                   boardAnalysis(cell);
                     if(figureAttackingKing !== null) {
+                       // if checkMate
                         if(gameStatus()?.bool) {
                             // updateBoard();
+                           setSelectedCell(null);
                            dispatch(setShowPopup({showPopup: true, subtitle: "by Checkmate"}));
                            restart();
                         }
@@ -47,69 +55,11 @@ const BoardComponent = () => {
                         dispatch(switchCurrentPlayer())
                         setSelectedCell(null);
                         updateBoard();
-                        board?.getCells();
                 }
             }
         }
     }
-    function checkCondition(cell : Cell) {
-       let bool = false;
-       if (board === undefined) return;
-         const cells = board.getCells();
-         // reset blockingCells
-        for (let i = 0; i < 8; i++) {
-            for (let j = 0; j < 8; j++) {
-                cells[i][j].setBlockingKing(Colors.BLACK, false);
-                cells[i][j].setBlockingKing(Colors.WHITE, false);
-                if(cell.figure) cell.figure.cellsToMove = [];
-            }
-        }
-        for (let i = 0; i < 8; i++) {
-           for (let j = 0; j < 8; j++) {
-              const target = cells[i][j];
-              if(target.figure?.color === cell.figure?.color) {
-                 if(target.figure?.name === FigureNames.Pawn) {
-                    checkPawn(target);
-                 } else {
-                    target.figure?.getAvailableCells();
-                    if(target.figure)checkAndBlock(target.figure);
-                 }
-              }
-           }
-        }
-        function checkPawn(target : Cell) {
-           // refactor
-            if (target?.figure?.color === Colors.BLACK) {
-                if (target.x !== 7) {
-                   board?.getCell(target.x + 1, target.y + 1).setBlockingKing(Colors.WHITE, true);
-                }
-                if (target.x !== 0) {
-                   board?.getCell(target.x - 1, target.y + 1).setBlockingKing(Colors.WHITE,true);
-                }
-            } else {
-                if (target.x !== 7) {
-                   board?.getCell(target.x + 1, target.y - 1).setBlockingKing(Colors.BLACK,true);
-                }
-                if (target.x !== 0) {
-                   board?.getCell(target.x - 1, target.y - 1).setBlockingKing(Colors.BLACK,true);
-                }
-            }
-        }
 
-        function checkAndBlock(figure : Figure) {
-                if(figure) {
-                    for (let i = 0; i < figure.cellsToMove.length; i++) {
-                        if(figure.cellsToMove[i].figure?.name === FigureNames.King && figure.color !== figure.cellsToMove[i].figure?.color) {
-                            // setFigureAttackingKing(figure);
-                            figureAttackingKing = figure;
-                        }
-                        figure.cellsToMove[i].setBlockingKing(figure.color === Colors.BLACK ? Colors.WHITE : Colors.BLACK,true);
-                    }
-                }
-        }
-
-
-    }
     function gameStatus()  {
          if(board === undefined) return ;
          let whiteKing = board.getKing(Colors.BLACK, board);
@@ -193,9 +143,7 @@ const BoardComponent = () => {
 
   return (
       <div>
-         {
-            popup.showPopup && <Popup/>
-         }
+         {popup.showPopup && <Popup/>}
           <NameField color={Colors.BLACK}/>
           <div className='board' >
               {board?.cells.map((row, index) =>

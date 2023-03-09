@@ -1,8 +1,6 @@
 import React, {FC} from 'react';
-import {Player} from "../models/Player";
 import {Colors} from "../models/Colors";
 import LostFigures from "./LostFigures";
-import {Figure} from "../models/figures/Figure";
 import {useSelector} from "react-redux";
 import {RootState} from "../redux/store";
 const ub = require("../assets/ub.png");

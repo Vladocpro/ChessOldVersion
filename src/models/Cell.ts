@@ -4,6 +4,7 @@ import {Figure, FigureNames} from "./figures/Figure";
 import {Queen} from "./figures/Queen";
 import {store} from "../redux/store";
 import {pushLostFigure} from "../redux/slices/globalSlice";
+import {setBoard} from "../redux/slices/boardSlice";
 
 export class Cell {
    readonly x: number;
@@ -225,6 +226,8 @@ export class Cell {
          this.addMoves(target, hadFigure);
          if(target.figure) this.figure = null;
       }
+      // if not working setBoard a new object!!!
+      store.dispatch(setBoard(this.board))
    }
 
 }

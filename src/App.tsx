@@ -8,7 +8,7 @@ import {RootState} from "./redux/store";
 import {restart} from "./logic/boardLogic";
 
 function App () {
-  const board = useSelector((state :RootState) => state.global.board);
+  const board = useSelector((state :RootState) => state.board.board);
 
   useEffect(()=> {
     restart();
