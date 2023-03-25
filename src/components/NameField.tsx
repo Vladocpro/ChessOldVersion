@@ -15,8 +15,8 @@ const NameField: FC<NameFieldProps> = ({color})  => {
         <div style={{ marginBottom: "8px", marginTop: "8px"}}>
             <div className="nameFlex">
                 {color === Colors.BLACK
-                    ? <img src={ub} style={{width: "54px", height: "54px", borderRadius: "10px 0 0 10px"}} alt=""/>
-                    : <img src={uw} style={{width: "54px", height: "54px", borderRadius: "10px 0 0 10px"}} alt=""/>
+                    ? <img src={ub} className="nameImg"  alt=""/>
+                    : <img src={uw} className="nameImg"  alt=""/>
                 }
                 <div>
                     <span className="nameSpan">{color === Colors.BLACK ? players.blackPlayer.name : players.whitePlayer.name}</span>

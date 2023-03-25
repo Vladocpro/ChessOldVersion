@@ -9,8 +9,6 @@ import {decrementBlackTime, decrementWhiteTime} from "../redux/slices/timerSlice
 
 
 const Timer  = () => {
-    // const[blackTime, setBlackTime] = useState<number>(899);
-    // const[whiteTime, setWhiteTime] = useState<number>(899);
     const {blackTime, whiteTime} = useSelector((state: RootState) => state.timer)
     const timer = useRef<null | ReturnType<typeof setInterval>>()
     const players = useSelector((state: RootState) => state.global.players)
@@ -47,8 +45,6 @@ const Timer  = () => {
     }
 
     const handleRestart = ()=> {
-        // setBlackTime(899);
-        // setWhiteTime(899);
         dispatch(setShowPopup({showPopup:false}))
         restart();
         startTimer(true);
@@ -64,7 +60,6 @@ const Timer  = () => {
 
 
     return (
-        <div>
             <div className="timer">
                 <div  className="timerChildren">
                     {
@@ -85,7 +80,6 @@ const Timer  = () => {
 
                 </div>
             </div>
-        </div>
     );
 };
 

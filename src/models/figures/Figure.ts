@@ -31,11 +31,6 @@ export class Figure {
       this.id = Math.random();
    }
 
-   // kingIsUnderAttack(target: Cell) {
-   //    const cells: Cell[][] = this.cell.board.getCells();
-   //    const kingCells : Cell[] = this.cell.board.getKings();
-   //
-   // }
    public updateCellsToMove(cells:Cell[]) {
       this.cellsToMove = cells;
    }
@@ -52,7 +47,7 @@ export class Figure {
    }
 
    moveFigure(target: Cell) {
-      
+
    }
 
 }
