@@ -3,7 +3,6 @@ import {Colors} from "../models/Colors";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../redux/store";
 import {setWinningPopup, winningPopupSubTitles} from "../redux/slices/globalSlice";
-import {restart} from "../lib/boardLogic";
 import {decrementBlackTime, decrementWhiteTime} from "../redux/slices/timerSlice";
 
 interface TimerProps {
@@ -49,11 +48,6 @@ const Timer : FC<TimerProps>  = ({color}) => {
         dispatch(decrementWhiteTime())
     }
 
-    // const handleRestart = ()=> {
-    //     dispatch(setWinningPopup({showPopup:false}))
-    //     restart();
-    //     startTimer(true);
-    // }
     function popupSwitch() {
         if(!popup.showPopup)  {
             dispatch(setWinningPopup(
@@ -89,7 +83,6 @@ const Timer : FC<TimerProps>  = ({color}) => {
                                     :
                                     <h2 className="timerSpan">{Math.floor(whiteTime / 60)}:0{whiteTime % 60}</h2>
                             }
-
                         </div>)
                 }
             </div>
