@@ -1,6 +1,10 @@
 
 *{padding:0;margin:0;border:0;}
-
+.body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  height: 100%;
+  background-color: #51504D;
+}
 
 .app {
   width: 100vw;
@@ -16,7 +20,7 @@
   height: calc(72px * 8);
   display: flex;
   flex-wrap: wrap;
-  border: 3px solid black;
+  border: 3px solid #3c3b3b;
   border-radius: 10px;
 }
 .cell {
@@ -67,17 +71,17 @@
   border-radius: 50%;
   opacity: 0.2;
   height: 45px;
-  width: 40px;
+  width: 43px;
 }
 
 .selected {
-  background-color: #F6F669;
+  background-color: #cdcd40;
 }
 
 .available {
   position: absolute;
-  height: 20px;
-  width: 20px;
+  height: 22px;
+  width: 22px;
   border-radius: 50%;
   background-color: rgb(28, 26, 26);
   opacity: 0.2;
@@ -86,31 +90,28 @@
 .lost {
   height: 30px;
   display: flex;
-
+  position: absolute;
+  bottom: 2%;
+  left: 10%;
 }
 .kingIsUnderAttack {
   background-color: #a42a2a;
 }
 .timer {
-  margin: 5px 10px;
-  text-align: center;
-  width: 128px;
+  position: absolute;
+  background: transparent;
+  right: 4px;
 }
-.timerChildren {
-  background-color: #769656;
-  border: black solid 3px;
-  margin: 10px 0px;
-  border-radius: 7px;
+.nameAndTimer {
+  display: flex;
+  align-items: start;
 }
 .timerSpan {
   height: 40px;
   line-height: 150%;
   font-size: 26px;
 }
-.timerChildren:nth-last-child(1) {
-  color: white;
-  border: white solid 3px;
-}
+
 .restartBtn {
   text-decoration: none;
   background-color: #85A94E;
@@ -118,7 +119,6 @@
   /*border: solid black 3px;*/
   cursor: pointer;
   padding: 7px 4px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   font-size: 18px;
   font-weight: bold;
   border-radius: 7px;
@@ -126,22 +126,25 @@
 }
 .nameFlex {
   display: flex;
+  flex-direction: column;
   background-color: #769656;
-  border: solid black 3px;
+  border: 3px solid #3c3b3b;
   border-radius: 10px;
-  width: 99%;
+  height: 58px;
+  color: white;
 }
 .nameImg {
-  width: 54px;
-  height: 54px;
-  border-radius: 10px 0 0 10px;
+  width: 50px;
+  height: 50px;
+  margin: 1px 4px 6px 4px;
+  object-fit: fill;
 }
 
 .nameSpan {
  margin: 0px 6px;
- font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
  font-weight: bold;
  font-size: 18px;
+  align-self: start;
 }
 .popup {
   position: fixed;
@@ -158,6 +161,7 @@
 .popupBox {
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: space-between;
   width: 280px;
   height: 240px;
@@ -168,40 +172,75 @@
   text-align: center;
   color: white;
   box-shadow: 0 0 14px rgba(0,0,0,0.75);
+  position: relative;
 }
 .popupHeader {
-  height: 90px;
   border-radius: 1rem 1rem 0 0;
   background-color: #85A94E;
+  width: 100%;
+  align-items: center;
+  padding-bottom: 15px;
+}
+.timerPopupBtn {
+  margin: 0 10px;
+  font-size: 27px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.timerArrows {
+  height: 16px;
+  width: 16px;
+  margin-top: 2px;
+  cursor: pointer;
 }
 .popupTitle {
   font-size: 2.1rem;
   font-weight: 800;
 }
-.popupSubTitle {
-
-}
 .popupClose {
   position: relative;
-  font-size: 16px;
   font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: #85A94E;
   border: white solid 1px;
   border-radius: 10px;
-  padding: 5px;
-  margin: 0 28% 30px ;
-  width: 120px;
+  font-size: 18px;
+  width: 150px;
   height: 40px;
+  margin: 0 28% 30px ;
   color: white;
   cursor: pointer;
 }
+
 .historyMainBlock {
-  min-height: 513px;
-  min-width: 300px;
+  height: 513px;
+  width: 300px;
   margin-left: 15px;
   background-color: #41403E;
   border-radius: 7px;
+  align-self: start;
+  position: relative;
+  /*right: 10%;*/
+  top: 16%;
 }
+
+.controlButtons {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  color: white;
+  position: absolute;
+  bottom: -60px;
+  height: 50px;
+  width: 100%;
+  border-radius: 7px;
+  background: #769656;
+  box-shadow: 0 0 5px #3c3b3b;
+
+}
+
 .turnHistoryLabel {
   color: white;
   text-align: center;
@@ -265,8 +304,18 @@
   border-top: solid 2px white;
 }
 .movesContainer {
+  overflow-y: scroll;
+  borderRadius:  0 0 0 6px;
   max-height: 469px;
   padding: 0 0 1px 0;
+}
+.lostFigureImg {
+  height: 30px;
+  width: 30px;
+  align-self: start;
+}
+.lostFiguresContainer {
+  align-self: end;
 }
 @media (max-width: 480px) {
   .app {
@@ -281,11 +330,14 @@
   .popup {
     right: 0px;
   }
-  .timer {
-    display: block;
-    margin-top: 10px;
-    text-align: center;
-    width: 128px;
+  .lostFigureImg {
+    height: 20px;
+    width: 20px;
+  }
+  .lostFiguresContainer {
+    align-self: end;
+    height: 20px;
+    margin-left: 6px;
   }
   .board {
     width: calc(46px * 8);
@@ -317,19 +369,31 @@
     height: 46px;
   }
   .nameImg {
-    height: 46px;
+    height: 45px;
     width: 49px;
+    margin: 0;
   }
   .nameSpan{
     font-size: 15px;
   }
-
   .historyMainBlock {
-    min-height: 200px;
-    min-width: 120px;
-    margin-left: 7px;
+    height: 185px;
+    min-width: 350px;
+    width: 100%;
+    max-width: 374px;
+    margin: 0 auto;
     background-color: #41403E;
     border-radius: 7px;
+    padding-bottom: 2px;
+  }
+  .movesContainer {
+    max-height: 95px;
+    border-radius: 0;
+  }
+  .controlButtons {
+    position: absolute;
+    bottom: 5px;
+
   }
   .turnHistoryLabel {
     color: white;
@@ -363,10 +427,10 @@
 }
 
 
-
 ::-webkit-scrollbar {
-  width: 20px;
   background-color: white;
+  width: 10px;
+
 }
 ::-webkit-scrollbar-track {
   background-color: #41403E;
@@ -374,7 +438,7 @@
 ::-webkit-scrollbar-thumb {
   background-color: #d6dee1;
   border-radius: 20px;
-  border: 6px solid transparent;
+  border: 3px solid transparent;
   background-clip: content-box;
 }
 

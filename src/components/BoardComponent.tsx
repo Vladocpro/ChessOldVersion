@@ -5,19 +5,20 @@ import {Cell} from "../models/Cell";
 import NameField from "./NameField";
 import {Figure, FigureNames} from "../models/figures/Figure";
 import {Colors} from "../models/Colors";
-import Popup from "./Popup";
+import WinningPopup from "./WinningPopup";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../redux/store";
-import { setShowPopup, switchCurrentPlayer} from "../redux/slices/globalSlice";
-import { restart} from "../logic/boardLogic";
+import {setWinningPopup, switchCurrentPlayer, winningPopupSubTitles} from "../redux/slices/globalSlice";
+import {restart} from "../lib/boardLogic";
 import {setBoard} from "../redux/slices/boardSlice";
+import TimerPopup from "./TimerPopup";
 
 
 
 const BoardComponent = () => {
    const [selectedCell, setSelectedCell] = useState<Cell | null>(null);
    let figureAttackingKing :Figure | null = null;
-   const { popup, players} = useSelector((state :RootState) => state.global);
+   const { winningPopup, timerPopup, players} = useSelector((state :RootState) => state.global);
    const board = useSelector((state :RootState) => state.board.board);
    const dispatch = useDispatch()
 
@@ -42,7 +43,7 @@ const BoardComponent = () => {
                if(figureAttackingKing !== null) {
                   if(gameStatus()?.bool) {
                      // updateBoard();
-                     dispatch(setShowPopup({showPopup: true, subtitle: "by Checkmate"}));
+                     dispatch(setWinningPopup({showPopup: true, subtitle: winningPopupSubTitles.CheckMate, winner: players.currentPlayer}));
                      restart();
                   }
                }
@@ -195,7 +196,8 @@ const BoardComponent = () => {
 
    return (
        <div>
-          {popup.showPopup && <Popup/>}
+          {winningPopup.showPopup && <WinningPopup/>}
+          {timerPopup.showPopup && <TimerPopup/>}
           <NameField color={Colors.BLACK}/>
           <div className='board' >
              {board?.cells.map((row, index) =>

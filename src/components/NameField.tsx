@@ -3,8 +3,9 @@ import {Colors} from "../models/Colors";
 import LostFigures from "./LostFigures";
 import {useSelector} from "react-redux";
 import {RootState} from "../redux/store";
-const ub = require("../assets/ub.png");
-const uw = require("../assets/uw.png");
+import Timer from "./Timer";
+
+const user = require("../assets/user1.png");
 interface NameFieldProps {
     color: Colors;
 }
@@ -14,18 +15,17 @@ const NameField: FC<NameFieldProps> = ({color})  => {
     return (
         <div style={{ marginBottom: "8px", marginTop: "8px"}}>
             <div className="nameFlex">
-                {color === Colors.BLACK
-                    ? <img src={ub} className="nameImg"  alt=""/>
-                    : <img src={uw} className="nameImg"  alt=""/>
-                }
-                <div>
-                    <span className="nameSpan">{color === Colors.BLACK ? players.blackPlayer.name : players.whitePlayer.name}</span>
-                    {color === Colors.WHITE
-                        ? <LostFigures figures={lostBlackFigures}/>
-                        : <LostFigures figures={lostWhiteFigures}/>
-                    }
 
+                <div style={{display: "flex", position: "relative", alignItems: "center"}}>
+                   <img src={user} className="nameImg"  alt=""/>
+                      <span className="nameSpan">{color === Colors.BLACK ? players.blackPlayer.name : players.whitePlayer.name}</span>
+                      <Timer color={color === Colors.BLACK ? Colors.BLACK : Colors.WHITE}/>
+                   {color === Colors.WHITE
+                       ? <LostFigures figures={lostBlackFigures}/>
+                       : <LostFigures figures={lostWhiteFigures}/>
+                   }
                 </div>
+
             </div>
         </div>
     );

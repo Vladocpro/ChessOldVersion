@@ -5,14 +5,14 @@ interface timerState {
    blackTime: number,
    whiteTime: number,
 
-   initialTime: number
+   initialTime: {blackTime: number, whiteTime: number}
 
 }
 
 const initialState : timerState= {
-      blackTime: 899,
-      whiteTime: 899,
-      initialTime: 899
+      blackTime: 900,
+      whiteTime: 900,
+      initialTime: {blackTime: 900, whiteTime: 900}
 }
 
 
@@ -26,14 +26,15 @@ export const timerSlice = createSlice({
       decrementWhiteTime : (state) => {
          state.whiteTime -= 1
       },
-      setTimer : (state, action:PayloadAction<number>) => {
-         state.blackTime = action.payload;
-         state.whiteTime = action.payload;
-         state.initialTime = action.payload;
+      setTimer : (state, action:PayloadAction<{blackTime: number, whiteTime: number}>) => {
+         state.initialTime.blackTime = action.payload.blackTime;
+         state.initialTime.whiteTime = action.payload.whiteTime;
+         state.blackTime = action.payload.blackTime;
+         state.whiteTime = action.payload.whiteTime;
       },
       resetTimer : (state) => {
-         state.blackTime = state.initialTime;
-         state.whiteTime = state.initialTime;
+         state.blackTime = state.initialTime.blackTime;
+         state.whiteTime = state.initialTime.whiteTime;
       }
    }
 })

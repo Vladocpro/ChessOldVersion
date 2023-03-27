@@ -3,9 +3,9 @@ import './App.css';
 import BoardComponent from './components/BoardComponent';
 import Timer from "./components/Timer";
 import TurnHistory from "./components/TurnHistory";
-import { useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {RootState} from "./redux/store";
-import {restart} from "./logic/boardLogic";
+import {restart} from "./lib/boardLogic";
 
 function App () {
   const board = useSelector((state :RootState) => state.board.board);
@@ -19,7 +19,6 @@ function App () {
 
   return (
     <div className='app'>
-        <Timer />
       <BoardComponent />
       <TurnHistory
           moveHist={board?.moveHist}
