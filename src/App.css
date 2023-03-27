@@ -356,6 +356,11 @@
     width: 13px;
   }
 
+  .attackingCircle::after {
+    height: 35px;
+    width: 33px;
+  }
+
   .notationLetter {
     font-size: 14px;
   }
